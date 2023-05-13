@@ -1,16 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg'
+import { AuthContext } from '../../../Providers/AuthProvider';
 
 const Navbar = () => {
+  const {user, logOut} =  useContext(AuthContext);
+
+
+
+
+  const handleLogOut = () => {
+    logOut()
+    .then( res => {
+      console.log(res)
+      localStorage.removeItem('car-token');
+    })
+    .catch(er => er.message)
+  }
 
     const navItem = <>
     <li><Link to='/'>Home</Link></li>
     <li><Link to='/about'>About</Link></li>
     <li><Link to='/services'>Services</Link></li>
-    <li><Link to='/blog'>Blog</Link></li>
-    <li><Link to='/contact'>Contact</Link></li>
+   
+    {
+      user ?  <> <li><Link to='/bookings'>My Bookings</Link></li>
+      <li onClick={handleLogOut}><button>Log Out</button></li></>  :
+      <li><Link to='/login'>Login</Link></li>
+    }
+    {/* <li><Link to='/contact'>Contact</Link></li> */}
     </>
+
+
+    
+
+
 
     return (
         <div className="navbar h-28 mb-5 bg-base-100">
