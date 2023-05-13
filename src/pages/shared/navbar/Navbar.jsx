@@ -13,7 +13,7 @@ const Navbar = () => {
     logOut()
     .then( res => {
       console.log(res)
-      localStorage.removeItem('car-token');
+     
     })
     .catch(er => er.message)
   }
